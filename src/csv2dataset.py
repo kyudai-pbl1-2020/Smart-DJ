@@ -1,6 +1,8 @@
 import csv
+import glob
 import pandas as pd
 
+# csvのファイルパスからデータを収集し，データのリストに変換する
 def csv2list(path):
     with open(path) as f:
         reader = csv.reader(f)
@@ -11,11 +13,14 @@ def csv2list(path):
             if (row[7] != ''):
                 datalist.append([int(row[0].split()[0].split('/')[1]), int(row[0].split()[1].split(':')[0]), int(row[7]), float(row[1]), float(row[4]), int(row[10])])
 
-        return pd.DataFrame(datalist, columns=['month', 'hour', 'weather', 'temperature', 'pressure', 'humidity'])
+        return datalist
 
-def csv2dataframe(path):
-    df = pd.read_csv(path, header=None)
-    df.drop([2, 3, 5, 6, 8, 9, 11, 12], inplace=True, axis=1)
-    return df[df[7].isnull() == False]
+# 学習用のデータ.csvを含むディレクトリのパスを受けとり，dataframeに変換する
+def dataframe_exporter(path):
+    path_list = glob.glob(path)
+    list_list = []
+    for csv_path in path_list:
+        list_list = list_list + csv2list(csv_path)
+    return pd.DataFrame(list_list, columns=['month', 'hour', 'weather', 'temperature', 'pressure', 'humidity'])
 
-print(csv2list('weather_data/data1.csv'))
+# print(dataframe_exporter("weather_data/*"))
