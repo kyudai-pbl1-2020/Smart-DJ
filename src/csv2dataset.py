@@ -2,20 +2,20 @@ import csv
 import glob
 import pandas as pd
 
-# csvのファイルパスからデータを収集し，データのリストに変換する
+# change scv to list
 def csv2list(path):
     with open(path) as f:
         reader = csv.reader(f)
         datalist = []
         for row in reader:
-            # 0:年月日時 1:気温 4:気圧 7:天気 10:湿度
-            # 天気があるやつだけ
+            # 0:ymdt 1:temperature 4:barometric pressure 7:weather 10:humidity
+            # append only including weather
             if (row[7] != ''):
                 datalist.append([int(row[0].split()[0].split('/')[1]), int(row[0].split()[1].split(':')[0]), int(row[7]), float(row[1]), float(row[4]), int(row[10])])
 
         return datalist
 
-# 学習用のデータ.csvを含むディレクトリのパスを受けとり，dataframeに変換する
+# make dataframe from csv directory path
 def dataframe_exporter(path):
     path_list = glob.glob(path)
     list_list = []
