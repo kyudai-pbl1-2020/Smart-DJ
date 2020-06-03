@@ -50,7 +50,8 @@ def on_connect(client, userdata, flags, respons_code):
 
 #--------------------------------------------------------------------------
 def on_message(client, userdata, msg):
-    print('[{}] {}'.format(msg.topic, str(msg.payload)))
+    print('[{}] {}'.format(myloadsg.topic, str(msg.payload)))
+    print(type(msg.payload))
     return
 
 #=========================================================================
