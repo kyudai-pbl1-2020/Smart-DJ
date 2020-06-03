@@ -1,3 +1,8 @@
 paho-mqtt
 mqbeebotte
 pandas
+numpy
+scikit-learn
+optuna
+matplotlib
+lightgbm
