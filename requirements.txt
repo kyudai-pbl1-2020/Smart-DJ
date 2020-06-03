@@ -1,6 +1,6 @@
 paho-mqtt
 mqbeebotte
-pandas
+pandas==1.0.1
 numpy
 scikit-learn
 optuna

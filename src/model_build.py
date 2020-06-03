@@ -60,15 +60,13 @@ def objective_data(data,target):
     def objective(trial):
 
         #データの読み込み
-        #df = csv2dataset.dataframe_exporter("./weather_data/*") 
-        #data = df.drop("weather",axis=1)
-        #target = df["weather"]
         train_x, test_x, train_y, test_y = train_test_split(data, target, test_size=0.25)
         dtrain = lgb.Dataset(train_x, label=train_y)
     
         param = {
             'objective': 'multiclass',
             'metric': 'multi_logloss',
+            'num_class': 16,
             'lambda_l1': trial.suggest_loguniform('lambda_l1', 1e-8, 10.0),
             'lambda_l2': trial.suggest_loguniform('lambda_l2', 1e-8, 10.0),
             'num_leaves': trial.suggest_int('num_leaves', 2, 256),
