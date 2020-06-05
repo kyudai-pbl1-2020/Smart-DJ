@@ -3,7 +3,7 @@ import csv
 import glob
 import pandas as pd
 
-# In[1]:
+# In[1]: read weather token (might use it in the future.)
 def read_weather_token(path):
     with open(path) as f:
         reader = csv.reader(f)
@@ -38,8 +38,8 @@ def dataframe_exporter(path):
 
 # print(dataframe_exporter("weather_data/*"))
 
-# In[4]:
-def change_weather(data_frame, path):
+# In[4]: convert weather definition
+def convert_weather(data_frame, path):
     convertion_dict = {}
     with open(path) as f:
         reader = csv.reader(f)
@@ -48,4 +48,4 @@ def change_weather(data_frame, path):
         
     return data_frame.replace({'weather': convertion_dict})
 
-print(change_weather(dataframe_exporter("weather_data/*"), "convert_weather_token.csv"))
+# print(convert_weather(dataframe_exporter("weather_data/*"), "convert_weather_token.csv"))
