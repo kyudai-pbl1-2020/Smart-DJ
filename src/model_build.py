@@ -22,7 +22,7 @@ def build(data,target):
 
     """
     #ハイパラメータ設定
-    params ={}
+    params = study.best_params
     
     
     #4foldsでモデルを評価
