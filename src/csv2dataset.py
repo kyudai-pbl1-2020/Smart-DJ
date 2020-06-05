@@ -39,5 +39,15 @@ def dataframe_exporter(path):
 # print(dataframe_exporter("weather_data/*"))
 
 # In[4]:
-def chenge_weather():
-    return 0
+def change_weather(data_frame, path):
+    convertion_dict = {}
+    with open(path) as f:
+        reader = csv.reader(f)
+        weather_dict = {}
+        for row in reader:
+            weather_dict[int(row[0])] = int(row[1])
+        
+        convertion_dict = weather_dict
+    return data_frame.replace({'weather': convertion_dict})
+
+# change_weather(dataframe_exporter("weather_data/*"), "convert_weather_token.csv")
