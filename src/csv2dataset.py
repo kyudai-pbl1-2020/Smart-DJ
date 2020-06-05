@@ -1,8 +1,21 @@
+# In[0]:
 import csv
 import glob
 import pandas as pd
 
-# change scv to list
+# In[1]:
+def read_weather_token(path):
+    with open(path) as f:
+        reader = csv.reader(f)
+        weather_dict = {}
+        for row in reader:
+            weather_dict[int(row[0])] = row[1]
+        
+        return weather_dict
+
+# print (read_weather_token("weather_token.csv"))
+
+# In[2]: change scv to list
 def csv2list(path):
     with open(path) as f:
         reader = csv.reader(f)
@@ -15,7 +28,7 @@ def csv2list(path):
 
         return datalist
 
-# make dataframe from csv directory path
+# In[3]: make dataframe from csv directory path
 def dataframe_exporter(path):
     path_list = glob.glob(path)
     list_list = []
@@ -24,3 +37,7 @@ def dataframe_exporter(path):
     return pd.DataFrame(list_list, columns=['month', 'hour', 'weather', 'temperature', 'pressure', 'humidity'])
 
 # print(dataframe_exporter("weather_data/*"))
+
+# In[4]:
+def chenge_weather():
+    return 0
