@@ -12,8 +12,11 @@ df = csv2dataset.dataframe_exporter("./weather_data/*")
 data = df.drop("weather",axis=1)
 target = df["weather"]
 
+#モデルの構築
 model_build.build(data,target)
 
 #予測用データ読み込み
 pred_data = tanaka.tanaka()
+
+#予測
 pred.pred(pred_data)
