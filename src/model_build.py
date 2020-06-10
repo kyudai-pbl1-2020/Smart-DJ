@@ -66,7 +66,7 @@ def objective_data(data,target):
         param = {
             'objective': 'multiclass',
             'metric': 'multi_logloss',
-            'num_class': 3,
+            'num_class': 4,
             'boosting': 'gbdt',
             'lambda_l1': trial.suggest_loguniform('lambda_l1', 1e-8, 10.0),
             'lambda_l2': trial.suggest_loguniform('lambda_l2', 1e-8, 10.0),
