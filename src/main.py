@@ -9,8 +9,8 @@ import pred
 #import tweet
 
 #データの読み込み
-df = csv2dataset.dataframe_exporter("./weather_token.csv") 
-#df = csv2dataset.df(df,"./weather_data/*")
+df = csv2dataset.dataframe_exporter("./weather_data/*") 
+df = csv2dataset.convert_weather(df,"./convert_weather_token")
 data = df.drop("weather",axis=1)
 target = df["weather"]
 

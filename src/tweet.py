@@ -13,7 +13,7 @@ def tweet(key):
     url = "https://api.twitter.com/1.1/statuses/update.json" #ツイートポストエンドポイント
 
     weather = ["sunny","cloud","rainy"]
-    #key = pred.predict(data)
+    #key = pred.predict(key)
     key = 0
     tweet = weather[key]
 
