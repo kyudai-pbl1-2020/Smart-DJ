@@ -5,10 +5,11 @@ import pandas as pd
 import csv2dataset 
 import model_build
 import pred
-import tanaka
+#import tanaka
 
 #データの読み込み
 df = csv2dataset.dataframe_exporter("./weather_data/*") 
+df = df
 data = df.drop("weather",axis=1)
 target = df["weather"]
 
@@ -16,7 +17,7 @@ target = df["weather"]
 model_build.build(data,target)
 
 #予測用データ読み込み
-pred_data = tanaka.tanaka()
+#pred_data = tanaka.tanaka()
 
 #予測
-pred.pred(pred_data)
+#pred.pred(pred_data)
