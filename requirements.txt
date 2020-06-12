@@ -6,3 +6,4 @@ scikit-learn
 optuna
 matplotlib
 lightgbm
+open-cv
