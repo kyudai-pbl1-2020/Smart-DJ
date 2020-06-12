@@ -13,7 +13,7 @@ for i in range(10):
     humidity = round(random.uniform(0, 100),2)
     sample = sample.append({'month':month,'hour':hour,'temperature':temperature,'pressure':pressure,'humidity':humidity},ignore_index=True)
 #print(sample)
-sample.to_csv('sample-sensor-data.csv',index=False)
+sample.to_csv('csv/sample-sensor-data.csv',index=False)
 #a = pd.read_csv('sample-sensor-data.csv')
 #print(a)
 

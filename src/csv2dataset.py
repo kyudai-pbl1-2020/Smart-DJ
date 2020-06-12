@@ -13,7 +13,7 @@ def read_weather_token(path):
         
         return weather_dict
 
-# print (read_weather_token("weather_token.csv"))
+# print (read_weather_token("csv/weather_token.csv"))
 
 # In[2]: change scv to list
 def csv2list(path):
@@ -48,4 +48,4 @@ def convert_weather(data_frame, path):
         
     return data_frame.replace({'weather': convertion_dict})
 
-# print(convert_weather(dataframe_exporter("weather_data/*"), "convert_weather_token.csv"))
+# print(convert_weather(dataframe_exporter("weather_data/*"), "csv/convert_weather_token.csv"))

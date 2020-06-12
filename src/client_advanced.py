@@ -54,7 +54,7 @@ def on_message(client, userdata, msg):
     print('[{}] {}'.format(msg.topic, str(msg.payload)))
     if (msg.topic == 'pbl1/sensors/envsensor/1' and msg.payload.type == 'json'):
         dict = json.loads(msg.payload)
-        with open('sensor_data_test.csv', 'w') as f:
+        with open('csv/sensor_data_test.csv', 'w') as f:
             writer = csv.writer(f)
             writer.writerow(['month','hour','temperature','pressure','humidity'])
             writer.writerow([dict['time'], dict['time'], dict['temperature'], dict['pressure'], dict['humidity']])

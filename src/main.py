@@ -10,7 +10,7 @@ import pred
 
 #データの読み込み
 df = csv2dataset.dataframe_exporter("./weather_data/*") 
-df = csv2dataset.convert_weather(df,"./convert_weather_token.CSV")
+df = csv2dataset.convert_weather(df,"./csv/convert_weather_token.CSV")
 data = df.drop("weather",axis=1)
 target = df["weather"]
 
