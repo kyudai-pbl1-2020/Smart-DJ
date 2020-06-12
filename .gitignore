@@ -8,3 +8,6 @@ local/
 __pycache__/
 pip-selfcheck.json
 src/config.py
+
+.vscode
+.DS_Store
