@@ -20,8 +20,18 @@ def detect(img):
 
     # 顔を検出した場合
     if len(facerect) > 0:   
+        #顔部分を切り取り
         for (x, y, h, w) in facerect:
             face_img = img[y:y+h,x:x+w]
             face_list.append(face_img) 
-    
-    return face_list         
+        #画像のリサイズ
+        width,height=50,60
+        face_list2=[]
+        for face in face_list:
+            #face = cv2.resize(face,(width,height))
+            face_list2.append(face) 
+        return face_list2
+    else :
+        return False      
+
+
