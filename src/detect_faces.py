@@ -25,10 +25,10 @@ def detect(img):
             face_img = img[y:y+h,x:x+w]
             face_list.append(face_img) 
         #画像のリサイズ
-        width,height=50,60
+        width,height=60,60
         face_list2=[]
         for face in face_list:
-            #face = cv2.resize(face,(width,height))
+            face = cv2.resize(face,(width,height))
             face_list2.append(face) 
         return face_list2
     else :
