@@ -40,6 +40,7 @@ including:
 import time
 import mqbeebotte
 import csv
+import datetime
 
 #=========================================================================
 # This sample comes with config.py.
@@ -54,14 +55,24 @@ def on_message(client, userdata, msg):
     print('[{}] {}'.format(msg.topic, str(msg.payload)))
     print(type(msg.payload))
     if (msg.topic == 'pbl1/sensors/envsensor/1'):
-        dict = json.loads(msg.payload)
+        dt_now = datetime.datetime.now()
+        
         with open('csv/sensor_data_test.csv', 'w') as f:
             writer = csv.writer(f)
             writer.writerow(['month','hour','temperature','pressure','humidity'])
-            writer.writerow([dict['time'], dict['time'], dict['temperature'], dict['pressure'], dict['humidity']])
+            writer.writerow([dt_now.month, dt_now.hour, dict['temperature'], dict['pressure'], dict['humidity']])
 
         with open('original_sensor_data.json', 'w') as f:
             json.dump(dict, f, indent=2)
+
+    # Stop network loop thread.
+    # When block_wait is set to True, stop() blocks until the thread stops.
+    # Default block_wait is False.  In a non-blocking manner, you need to
+    # wait until the thead stops using client.join().
+    client.stop(block_wait=True)
+
+    # Disconnect and removes the client instance.
+    del client
 
     return
 
@@ -103,29 +114,6 @@ print('Subscribe to {}'.format(', '.join(sub_topics)))
 # Give a list to subscribe() to subscribe to multiple topics.
 client.subscribe(sub_topics)
 time.sleep(3600)
-
-'''
-print('Subscribe to {}/unit{:d}/1'.format(config.topic_base, config.unit))
-client.subscribe('pbl1/unit{:d}/1'.format(config.unit))
-print('Subscribe to {}/unit{:d}/2'.format(config.topic_base, config.unit))
-client.subscribe('pbl1/unit{:d}/2'.format(config.unit))
-print('Subscribe to {}/unit{:d}/3'.format(config.topic_base, config.unit))
-client.subscribe('pbl1/unit{:d}/3'.format(config.unit))
-
-for cnt in range(1,4):
-    # I usually hook Ctrl-C to close connection properly.
-    try:
-        time.sleep(5)
-        # Publish a message to a topic 'pbl1/unitX/x'
-        print('Publish a message to pbl1/unit{:d}/{:d}'.format(config.unit, cnt))
-        client.publish('pbl1/unit{:d}/{:d}'.format(config.unit, cnt), 'test count {:d}'.format(cnt))
-    except KeyboardInterrupt:
-        print('Stop requested.')
-        break
-
-# wait for the final on_message call.
-time.sleep(5)
-'''
 
 
 # Stop network loop thread.
