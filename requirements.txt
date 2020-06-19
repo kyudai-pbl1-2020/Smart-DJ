@@ -6,10 +6,7 @@ scikit-learn
 optuna
 matplotlib
 lightgbm
-<<<<<<< HEAD
 opencv-python
-=======
 keras
 tensorflowjs
 Pillow
->>>>>>> master
