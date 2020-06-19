@@ -7,14 +7,14 @@ import pandas as pd
 from weather import csv2dataset
 from weather import model_build
 from weather import pred
-import sensor_data_processor as sdp
+from sensor import sensor_data_processor as sdp
 #import tweet
 
-print(sdp.subscribe_sensor_data())
+# print(sdp.subscribe_sensor_data())
 
 #データの読み込み
-df = csv2dataset.dataframe_exporter("./weather_data/*") 
-df = csv2dataset.convert_weather(df,"./csv/convert_weather_token.CSV")
+df = csv2dataset.dataframe_exporter("./weather/weather_data/*") 
+df = csv2dataset.convert_weather(df,"./weather/convert_weather_token.CSV")
 data = df.drop("weather",axis=1)
 target = df["weather"]
 
