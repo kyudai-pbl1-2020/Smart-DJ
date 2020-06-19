@@ -56,7 +56,9 @@ def on_message(client, userdata, msg):
     print(type(msg.payload))
     if (msg.topic == 'pbl1/sensors/envsensor/1'):
         dt_now = datetime.datetime.now()
-        
+        dict = json.loads(msg.payload)
+        data_list = [dict['temperature'], dict['pressure'], dict['humidity']]
+        '''
         with open('csv/sensor_data_test.csv', 'w') as f:
             writer = csv.writer(f)
             writer.writerow(['month','hour','temperature','pressure','humidity'])
@@ -64,6 +66,7 @@ def on_message(client, userdata, msg):
 
         with open('original_sensor_data.json', 'w') as f:
             json.dump(dict, f, indent=2)
+        '''
 
     # Stop network loop thread.
     # When block_wait is set to True, stop() blocks until the thread stops.
@@ -74,7 +77,9 @@ def on_message(client, userdata, msg):
     # Disconnect and removes the client instance.
     del client
 
-    return
+    # ここでmainとかを呼ぶ？(main(data_list))
+
+    return 
 
 #=========================================================================
 # Before execute any MQTT client code, you need to create a channel and resource
@@ -84,43 +89,39 @@ def on_message(client, userdata, msg):
 import config
 import json
 
-# Create an client instance.
-try:
-    ca_cert = config.ca_cert
-except AttributeError:
-    ca_cert = None
-# client = mqbeebotte.client(ca_cert=ca_cert)
-# 非ssl接続
-client = mqbeebotte.client()
+def subscribe_sensor_data():
+    # Create an client instance.
+    try:
+        ca_cert = config.ca_cert
+    except AttributeError:
+        ca_cert = None
+    # client = mqbeebotte.client(ca_cert=ca_cert)
+    # 非ssl接続
+    client = mqbeebotte.client()
 
-# And connect to Beebotte.
-client.connect(config.channel_token, on_connect=on_connect, on_message=on_message)
-# Start network loop thread.
-# Thread is running in a non-blocking manner.
-client.start()
+    # And connect to Beebotte.
+    client.connect(config.channel_token, on_connect=on_connect, on_message=on_message)
+    # Start network loop thread.
+    # Thread is running in a non-blocking manner.
+    client.start()
 
-#--------------------------------------------------------------------------
-# You can do anything after this including executing subscribe and publish.
-#--------------------------------------------------------------------------
+    # Subscribe to mutiple topics.
+    # Generate target topic names.
+    topics = [
+        'envsensor/1',
+    ]
+    # subscribe to sensor data topics
+    sub_topics = list(map(lambda x: config.topic_base + '/' + x, topics))
+    print('Subscribe to {}'.format(', '.join(sub_topics)))
+    # Give a list to subscribe() to subscribe to multiple topics.
+    client.subscribe(sub_topics)
+    time.sleep(3600)
 
-# Subscribe to mutiple topics.
-# Generate target topic names.
-topics = [
-    '#',
-]
-# subscribe to sensor data topics
-sub_topics = list(map(lambda x: config.topic_base + '/' + x, topics))
-print('Subscribe to {}'.format(', '.join(sub_topics)))
-# Give a list to subscribe() to subscribe to multiple topics.
-client.subscribe(sub_topics)
-time.sleep(3600)
+    # Stop network loop thread.
+    # When block_wait is set to True, stop() blocks until the thread stops.
+    # Default block_wait is False.  In a non-blocking manner, you need to
+    # wait until the thead stops using client.join().
+    client.stop(block_wait=True)
 
-
-# Stop network loop thread.
-# When block_wait is set to True, stop() blocks until the thread stops.
-# Default block_wait is False.  In a non-blocking manner, you need to
-# wait until the thead stops using client.join().
-client.stop(block_wait=True)
-
-# Disconnect and removes the client instance.
-del client
+    # Disconnect and removes the client instance.
+    del client

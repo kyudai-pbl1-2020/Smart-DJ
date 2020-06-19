@@ -96,13 +96,14 @@ client.start()
 # Generate target topic names.
 topics = [
     '#',
+    # 'envsensor/1',
 ]
 # subscribe to sensor data topics
 sub_topics = list(map(lambda x: config.topic_base + '/' + x, topics))
 print('Subscribe to {}'.format(', '.join(sub_topics)))
 # Give a list to subscribe() to subscribe to multiple topics.
 client.subscribe(sub_topics)
-time.sleep(3600)
+time.sleep(600)
 
 '''
 print('Subscribe to {}/unit{:d}/1'.format(config.topic_base, config.unit))
