@@ -55,12 +55,12 @@ def on_message(client, userdata, msg):
     print(type(msg.payload))
     if (msg.topic == 'pbl1/sensors/envsensor/1'):
         dict = json.loads(msg.payload)
-        with open('csv/sensor_data_test.csv', 'w') as f:
+        with open('sensor/sensor_data_test.csv', 'w') as f:
             writer = csv.writer(f)
             writer.writerow(['month','hour','temperature','pressure','humidity'])
             writer.writerow([dict['time'], dict['time'], dict['temperature'], dict['pressure'], dict['humidity']])
 
-        with open('original_sensor_data.json', 'w') as f:
+        with open('sonsor/original_sensor_data.json', 'w') as f:
             json.dump(dict, f, indent=2)
 
     return
@@ -103,7 +103,7 @@ sub_topics = list(map(lambda x: config.topic_base + '/' + x, topics))
 print('Subscribe to {}'.format(', '.join(sub_topics)))
 # Give a list to subscribe() to subscribe to multiple topics.
 client.subscribe(sub_topics)
-time.sleep(600)
+time.sleep(100)
 
 '''
 print('Subscribe to {}/unit{:d}/1'.format(config.topic_base, config.unit))

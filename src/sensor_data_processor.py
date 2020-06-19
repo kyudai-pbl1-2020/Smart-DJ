@@ -42,6 +42,18 @@ import mqbeebotte
 import csv
 import datetime
 
+call_flag = False
+data_list = []
+
+def export_file(dic, dt_now):
+    with open('csv/sensor_data_test.csv', 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow(['month','hour','temperature','pressure','humidity'])
+            writer.writerow([dt_now.month, dt_now.hour, dict['temperature'], dict['pressure'], dict['humidity']])
+
+    with open('original_sensor_data.json', 'w') as f:
+        json.dump(dict, f, indent=2)
+
 #=========================================================================
 # This sample comes with config.py.
 # Please modify config.py before executing this sample.
@@ -52,32 +64,15 @@ def on_connect(client, userdata, flags, respons_code):
 
 #--------------------------------------------------------------------------
 def on_message(client, userdata, msg):
-    print('[{}] {}'.format(msg.topic, str(msg.payload)))
-    print(type(msg.payload))
+    # print('[{}] {}'.format(msg.topic, str(msg.payload)))
     if (msg.topic == 'pbl1/sensors/envsensor/1'):
+        print('Receive a sensor data!')
         dt_now = datetime.datetime.now()
-        dict = json.loads(msg.payload)
-        data_list = [dict['temperature'], dict['pressure'], dict['humidity']]
-        '''
-        with open('csv/sensor_data_test.csv', 'w') as f:
-            writer = csv.writer(f)
-            writer.writerow(['month','hour','temperature','pressure','humidity'])
-            writer.writerow([dt_now.month, dt_now.hour, dict['temperature'], dict['pressure'], dict['humidity']])
-
-        with open('original_sensor_data.json', 'w') as f:
-            json.dump(dict, f, indent=2)
-        '''
-
-    # Stop network loop thread.
-    # When block_wait is set to True, stop() blocks until the thread stops.
-    # Default block_wait is False.  In a non-blocking manner, you need to
-    # wait until the thead stops using client.join().
-    client.stop(block_wait=True)
-
-    # Disconnect and removes the client instance.
-    del client
-
-    # ここでmainとかを呼ぶ？(main(data_list))
+        dic = json.loads(msg.payload)
+        global data_list
+        global call_flag
+        data_list = [dt_now.month, dt_now.hour, dic['temperature'], dic['pressure'], dic['humidity']]
+        call_flag = True
 
     return 
 
@@ -115,7 +110,13 @@ def subscribe_sensor_data():
     print('Subscribe to {}'.format(', '.join(sub_topics)))
     # Give a list to subscribe() to subscribe to multiple topics.
     client.subscribe(sub_topics)
-    time.sleep(3600)
+
+    # break when call on_message()
+    for i in range(0, 60):
+        if (call_flag):
+            break
+        time.sleep(10)
+
 
     # Stop network loop thread.
     # When block_wait is set to True, stop() blocks until the thread stops.
@@ -125,3 +126,5 @@ def subscribe_sensor_data():
 
     # Disconnect and removes the client instance.
     del client
+
+    return data_list

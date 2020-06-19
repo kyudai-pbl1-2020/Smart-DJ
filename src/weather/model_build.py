@@ -6,7 +6,7 @@ from sklearn.metrics import log_loss,accuracy_score
 from sklearn.model_selection import train_test_split
 import optuna
 import pickle
-import csv2dataset
+from . import csv2dataset
 
 
  

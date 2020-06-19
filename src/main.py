@@ -2,11 +2,15 @@ import numpy as np
 import pandas as pd
 #from . import csv2dataset 
 #from . import model_build
-import csv2dataset 
-import model_build
-import pred
-#import tanaka
+#import csv2dataset
+
+from weather import csv2dataset
+from weather import model_build
+from weather import pred
+import sensor_data_processor as sdp
 #import tweet
+
+print(sdp.subscribe_sensor_data())
 
 #データの読み込み
 df = csv2dataset.dataframe_exporter("./weather_data/*") 
