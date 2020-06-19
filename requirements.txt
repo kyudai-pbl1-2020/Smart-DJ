@@ -6,3 +6,7 @@ scikit-learn
 optuna
 matplotlib
 lightgbm
+opencv-python
+keras
+tensorflowjs
+Pillow
