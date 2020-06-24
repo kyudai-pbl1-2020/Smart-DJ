@@ -12,7 +12,7 @@ def tweet(key):
 
     url = "https://api.twitter.com/1.1/statuses/update.json" #ツイートポストエンドポイント
 
-    weather = ["sunny","cloud","rainy"]
+    weather = ["#sunny","#cloud","#rainy"]
     #key = pred.predict(key)
     key = 0
     tweet = weather[key]
@@ -25,3 +25,4 @@ def tweet(key):
         print("Success.")
     else: #正常投稿出来なかった場合
         print("Failed. : %d"% res.status_code)
+

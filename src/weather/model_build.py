@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import lightgbm as lgb
 from sklearn.metrics import log_loss,accuracy_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split,KFold
 import optuna
 import pickle
 import csv2dataset
@@ -15,19 +15,19 @@ def build(data,target):
     
     #ハイパラメータのチューニング
     study = optuna.create_study(direction='maximize')
-    study.optimize(objective_data(data,target), n_trials=100)
+    study.optimize(objective_data(data,target), n_trials=1)
  
     print('Number of finished trials:', len(study.trials))
     print('Best trial:', study.best_trial.params)
 
-    """
+    
     #ハイパラメータ設定
     params = study.best_params
     
     
     #4foldsでモデルを評価
     scores = []
-    kf = Kfold(n_splits=4,shuffle=True,random_state=71)
+    kf = KFold(n_splits=4,shuffle=True,random_state=71)
     for tr_idx, val_idx in kf.split(data):
         tr_x,val_x = data.iloc[tr_idx], data.iloc[val_idx]
         tr_y,val_y = target.iloc[tr_idx], target.iloc[val_idx]
@@ -35,6 +35,7 @@ def build(data,target):
 
         gbm = lgb.train(params, dtrain)
         preds = gbm.predict(val_x)
+        print(preds)
         # 最尤と判断したクラスの値にする
         preds_max = np.argmax(preds, axis=1)  
         
@@ -49,10 +50,10 @@ def build(data,target):
 
     #モデルを保存
     file = 'trained_model.pkl'
-    pickle.dump(clf, open(file, 'wb'))
+    pickle.dump(gbm, open(file, 'wb'))
 
 
-    """
+    
 
 
 #パラメータのチューニング
