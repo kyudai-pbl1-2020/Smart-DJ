@@ -2,7 +2,7 @@ import json, config #標準のjsonモジュールとconfig.pyの読み込み
 from requests_oauthlib import OAuth1Session #OAuthのライブラリの読み込み
 #import pred
 
-def tweet(key):
+def tweet(data):
 
     CK = config.CONSUMER_KEY
     CS = config.CONSUMER_SECRET
@@ -13,8 +13,8 @@ def tweet(key):
     url = "https://api.twitter.com/1.1/statuses/update.json" #ツイートポストエンドポイント
 
     weather = ["#sunny","#cloud","#rainy"]
-    #key = pred.predict(key)
-    key = 0
+    key = pred.predict(data)
+    #key = 0
     tweet = weather[key]
 
     params = {"status" : tweet}
