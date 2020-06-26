@@ -27,12 +27,11 @@ def emotion_recognition(image_path): #predict emotion from image of
     label = emotion_max[0]
     return label
 
-'''
+
 def main():
-    test
     image_path = './images/happy.jpg'
     label =  emotion_recognition(image_path)
     print(label)
 
 main()
-'''
+
