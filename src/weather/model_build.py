@@ -6,9 +6,6 @@ from sklearn.metrics import log_loss,accuracy_score
 from sklearn.model_selection import train_test_split,KFold
 import optuna
 import pickle
-from . import csv2dataset
-
-
  
 #モデルの構築
 def build(data,target): 
@@ -20,11 +17,13 @@ def build(data,target):
     print('Number of finished trials:', len(study.trials))
     print('Best trial:', study.best_trial.params)
 
-    
     #ハイパラメータ設定
     params = study.best_params
-    
-    
+    params['objective'] = 'multiclass'
+    params['metric'] = 'multi_logloss'
+    params['num_class'] = 3
+    params['boosting_type'] = 'gbdt'
+
     #4foldsでモデルを評価
     scores = []
     kf = KFold(n_splits=4,shuffle=True,random_state=71)
@@ -35,14 +34,13 @@ def build(data,target):
 
         gbm = lgb.train(params, dtrain)
         preds = gbm.predict(val_x)
-        print(preds)
         # 最尤と判断したクラスの値にする
         preds_max = np.argmax(preds, axis=1)  
         
         # 精度 (Accuracy) を計算する
         score = sum(val_y == preds_max) / len(val_y)
         scores.append(score)
-    print(f'logloss: {np.mean(scores):.4f}')
+    print(f'accuracy: {np.mean(scores):.4f}')
 
     #データ全体を使って学習
     all_train = lgb.Dataset(data, label=target)
@@ -51,10 +49,6 @@ def build(data,target):
     #モデルを保存
     file = 'trained_model.pkl'
     pickle.dump(gbm, open(file, 'wb'))
-
-
-    
-
 
 #パラメータのチューニング
 def objective_data(data,target):
@@ -67,7 +61,7 @@ def objective_data(data,target):
         param = {
             'objective': 'multiclass',
             'metric': 'multi_logloss',
-            'num_class': 4,
+            'num_class': 3,
             'boosting': 'gbdt',
             'lambda_l1': trial.suggest_loguniform('lambda_l1', 1e-8, 10.0),
             'lambda_l2': trial.suggest_loguniform('lambda_l2', 1e-8, 10.0),

@@ -1,13 +1,13 @@
-import json, config #標準のjsonモジュールとconfig.pyの読み込み
+import json, config_tw #標準のjsonモジュールとconfig.pyの読み込み
 from requests_oauthlib import OAuth1Session #OAuthのライブラリの読み込み
-#import pred
+import pred
 
 def tweet(data):
 
-    CK = config.CONSUMER_KEY
-    CS = config.CONSUMER_SECRET
-    AT = config.ACCESS_TOKEN
-    ATS = config.ACCESS_TOKEN_SECRET
+    CK = config_tw.CONSUMER_KEY
+    CS = config_tw.CONSUMER_SECRET
+    AT = config_tw.ACCESS_TOKEN
+    ATS = config_tw.ACCESS_TOKEN_SECRET
     twitter = OAuth1Session(CK, CS, AT, ATS) #認証処理
 
     url = "https://api.twitter.com/1.1/statuses/update.json" #ツイートポストエンドポイント
