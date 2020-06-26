@@ -21,7 +21,8 @@ print(pred_data)
 #予測データの変換
 
 if len(pred_data) != 0:
-    pred_data = pd.DataFrame({'month' : pred_data[0], 'hour' : pred_data[1],'temperature' : pred_data[2], 'pressure' : pred_data[3],'humidity':pred_data[4]})
+    #pred_data = pd.DataFrame({'month' : pred_data[0], 'hour' : pred_data[1],'temperature' : pred_data[2], 'pressure' : pred_data[3],'humidity':pred_data[4]})
+    pred_data = pd.Series(pred_data, index=['month','hour','temperature','pressure','humidity'])
     pred_data2 = pred.pred(pred_data)
     key = np.argmax(pred_data2)
 
