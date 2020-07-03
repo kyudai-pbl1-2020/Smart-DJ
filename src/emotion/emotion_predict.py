@@ -33,10 +33,10 @@ def emotion_recognition(img_list): #predict emotion from image of
     return label_list
 
 
-def main():
-    image_path = './images/happy.jpg'
-    label =  emotion_recognition(image_path)
-    print(label)
+#def main():
+#    image_path = './images/happy.jpg'
+#    label =  emotion_recognition(image_path)
+ #   print(label)
 
-main()
+#main()
 

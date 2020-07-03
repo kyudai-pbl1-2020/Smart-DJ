@@ -1,5 +1,7 @@
 import os
 import random
+from keras.preprocessing import image
+
 def getImage(root_path):
     index=1
     img_list=[]
@@ -13,3 +15,6 @@ def getImage(root_path):
             index+=1
     random.shuffle(img_list)
     return img_list
+
+
+
