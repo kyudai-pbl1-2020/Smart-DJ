@@ -11,3 +11,4 @@ keras
 tensorflowjs
 Pillow
 flask
+Werkzeug
