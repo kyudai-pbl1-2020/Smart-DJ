@@ -1,6 +1,5 @@
 import os
 import random
-from keras.preprocessing import image
 
 def getImage(root_path):
     index=1

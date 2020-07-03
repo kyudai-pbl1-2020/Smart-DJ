@@ -16,8 +16,8 @@ target = df["weather"]
 #model_build.build(data,target)
 
 #予測用データ読み込み (list['month','hour','temperature','pressure','humidity'])
-pred_data = sdp.subscribe_sensor_data()
-#pred_data = [6,17,27.12,998.2,64.22]
+#pred_data = sdp.subscribe_sensor_data()
+pred_data = [6,17,27.12,998.2,64.22] #テスト用
 #print(pred_data)
 #予測データの変換
 
