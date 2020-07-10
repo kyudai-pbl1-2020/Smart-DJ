@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 import json
 import numpy as np
 import pandas as pd
+import requests
 from weather import csv2dataset
 from weather import model_build
 from weather import pred
@@ -35,15 +36,18 @@ def sensor():
     #model_build.build(data,target)
 
     #予測用データ読み込み (list['month','hour','temperature','pressure','humidity'])
-    pred_data = sdp.subscribe_sensor_data()
-    #pred_data = [6,17,27.12,998.2,64.22] #テスト用
+    #pred_data = sdp.subscribe_sensor_data()
+    pred_data = [6,17,27.12,998.2,64.22] #テスト用
     #print(pred_data)
     #予測データの変換
 
     if len(pred_data) != 0:
         pred_data = pd.Series(pred_data, index=['month','hour','temperature','pressure','humidity'])
-        key = pred.pred(pred_data)
-        return(str(key) + 'sensor')
+        keyword = pred.pred(pred_data)
+        label = 'test'
+        key = ''
+        requests.get('https://maker.ifttt.com/trigger/' + label + '/with/key/' + key)
+        return(str(keyword) + 'sensor')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)
