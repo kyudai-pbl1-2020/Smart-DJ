@@ -86,8 +86,8 @@ def show_emotion():
     label = ep.emotion_recognition(img_list)
 
     # weather
-    pred_data = sdp.subscribe_sensor_data()
-    # pred_data = [6,17,27.12,998.2,64.22] #テスト用
+    # pred_data = sdp.subscribe_sensor_data()
+    pred_data = [6,17,27.12,998.2,64.22] #テスト用
     pred_data = pd.Series(pred_data, index=['month','hour','temperature','pressure','humidity'])
     keyword = pred.pred(pred_data)
     weather_str = ''
@@ -98,7 +98,8 @@ def show_emotion():
     elif (keyword == 2):
         weather_str = 'rainy'
     
-    return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str)
+    # return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str)
+    return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str) + '<br>' + '<a href=https://www.youtube.com/results?search_query=' + weather_str + '+' + str(label[0]) + '>click!!!!</a>'
 
 @app.route("/up_img", methods=['GET', 'POST'])
 def uploads_file():
