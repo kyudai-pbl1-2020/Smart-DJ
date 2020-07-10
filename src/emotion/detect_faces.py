@@ -25,7 +25,7 @@ def detect(img):
             face_img = img[y:y+h,x:x+w]
             face_list.append(face_img) 
         #画像のリサイズ
-        width,height=60,60
+        width,height=64,64
         face_list2=[]
         for face in face_list:
             face = cv2.resize(face,(width,height))

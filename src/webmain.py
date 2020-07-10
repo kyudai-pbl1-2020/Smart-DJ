@@ -7,6 +7,8 @@ from weather import csv2dataset
 from weather import model_build
 from weather import pred
 from sensor import sensor_data_processor as sdp
+from emotion import emotionmain as em
+
 
 app = Flask(__name__)
 
@@ -47,7 +49,12 @@ def sensor():
         #label = 'test'
         #key = ''
         #requests.get('https://maker.ifttt.com/trigger/' + label + '/with/key/' + key)
+
         return(str(keyword) + 'sensor')
+
+@app.route("/img")
+    emo = em.emotion()
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)
