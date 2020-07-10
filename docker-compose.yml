@@ -34,10 +34,12 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: beebotte
+    ports:
+        - "5000:5000"
     volumes:
       - ./src:/app/src
     environment:
       TZ: 'Asia/Tokyo'
     working_dir: /app/src
     tty: true
-#    command: python main.py
+    command: python webmain.py
