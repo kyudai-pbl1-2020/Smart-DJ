@@ -86,8 +86,8 @@ def show_emotion():
     label = ep.emotion_recognition(img_list)
 
     # weather
-    # pred_data = sdp.subscribe_sensor_data()
-    pred_data = [6,17,27.12,998.2,64.22] #テスト用
+    pred_data = sdp.subscribe_sensor_data()
+    # pred_data = [6,17,27.12,998.2,64.22] #テスト用
     pred_data = pd.Series(pred_data, index=['month','hour','temperature','pressure','humidity'])
     keyword = pred.pred(pred_data)
     weather_str = ''
