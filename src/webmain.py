@@ -69,6 +69,7 @@ def sensor():
 
 @app.route("/emotion")
 def show_emotion():
+    # emotion
     img = cv2.imread('./uploads/sad.jpg')
     face_list =  df.detect(img)
 
@@ -83,8 +84,21 @@ def show_emotion():
         img_list.append(img)
 
     label = ep.emotion_recognition(img_list)
+
+    # weather
+    pred_data = sdp.subscribe_sensor_data()
+    # pred_data = [6,17,27.12,998.2,64.22] #テスト用
+    pred_data = pd.Series(pred_data, index=['month','hour','temperature','pressure','humidity'])
+    keyword = pred.pred(pred_data)
+    weather_str = ''
+    if (keyword == 0):
+        weather_str = 'sunny'
+    elif (keyword == 1):
+        weather_str = 'cloudy'
+    elif (keyword == 2):
+        weather_str = 'rainy'
     
-    return str(label[0])
+    return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str)
 
 @app.route("/up_img", methods=['GET', 'POST'])
 def uploads_file():
