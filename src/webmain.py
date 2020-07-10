@@ -70,7 +70,6 @@ def sensor():
 @app.route("/emotion")
 def show_emotion():
     img = cv2.imread('./uploads/sad.jpg')
-
     face_list =  df.detect(img)
 
     for i in range(len(face_list)):
@@ -84,8 +83,8 @@ def show_emotion():
         img_list.append(img)
 
     label = ep.emotion_recognition(img_list)
-
-    return label
+    
+    return str(label[0])
 
 @app.route("/up_img", methods=['GET', 'POST'])
 def uploads_file():
@@ -128,8 +127,6 @@ def uploads_file():
             </form>
         </body>
 '''
-
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)

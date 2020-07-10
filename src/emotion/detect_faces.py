@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 def detect(img):
 
     # 分類器の読込
-    cascade_path = './haarcascade_frontalface_alt.xml'
+    cascade_path = 'emotion/haarcascade_frontalface_alt.xml'
     
     # グレースケールに変換(顔検用)
     gry_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
