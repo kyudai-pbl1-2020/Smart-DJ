@@ -26,8 +26,12 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-FROM python:3.7-buster
+FROM python:3.8.3-alpine
 
+RUN apk update
+RUN apk add git
+RUN pip install --upgrade pip
+RUN pip3 install --upgrade pip setuptools
 RUN mkdir /app
 WORKDIR /app
 
@@ -38,3 +42,6 @@ RUN set -x && \
 	curl -L "https://beebotte.com/certs/mqtt.beebotte.com.pem" -o /etc/ssl/certs/mqtt.beebotte.com.pem && \
   apt update && \
   apt install -y mosquitto-clients
+
+ENV FLASK_APP /src/webmain.py
+CMD flask run -h 0.0.0.0 -p $PORT

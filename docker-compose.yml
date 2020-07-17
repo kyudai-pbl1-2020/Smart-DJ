@@ -42,4 +42,4 @@ services:
       TZ: 'Asia/Tokyo'
     working_dir: /app/src
     tty: true
-    command: python webmain.py
+    
