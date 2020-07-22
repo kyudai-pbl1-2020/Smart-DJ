@@ -3,16 +3,12 @@
 <head>
 <meta charset="utf-8">
 	<script type="text/javascript">
-		function previewFile() {
-			var uploadImg = document.getElementById('imgpre');
-        	var src=event.target || window.event.srcElement; //获取事件源，兼容chrome/IE
-            //下面把路径截取为文件名
-        var filename=src.value;//图片完整路径
-        var prefix=filename.substring( filename.lastIndexOf('\\')+1 );//获取文件名的前缀名（文件格式）
-        console.log(prefix);
-        path="../images/"+prefix
-        console.log(path);
-        uploadImg.src=path;
+		function previewFile(obj) {
+            var fileReader = new FileReader();
+	        fileReader.onload = (function() {
+		        document.getElementById('preview').src = fileReader.result;
+	        });
+	        fileReader.readAsDataURL(obj.files[0]);
 		}
 	</script>
 <title>無題ドキュメント</title>
@@ -61,7 +57,7 @@
 	<div style="width: 1980px;height: 400px" >
 		<div style="height: 400px;width:300px;float: left"></div>
 		<div style="height: 400px;width:700px;float: left;" >
-    		<img id="imgpre" src="../static/images/play.png" width="400" height="400"/>
+    		<img id="preview" src="../static/images/play.png" width="400" height="400"/>
 		</div>
 		<div style="height: 400px;width:400px;float: left;">
 			<iframe width="560" height="400" src="https://www.youtube.com/embed/M5V9CERbLcA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -70,17 +66,24 @@
 	<div class="label">
 		<div style="width: 350px;height: 200px;float: left">
 		</div>
-		<h1>
-			ファイルをアップロードして判定しよう
-		</h1>
-		<form method = post enctype = multipart/form-data target="iframe">
-<!--			<img id="preview" alt="" src="" name="pic" class="file_img" style="margin-top: 5px;margin-left: 12px; width: 158px; height: 230px;"/>-->
-			<input id="f" type=file name = file onchange="previewFile()">
-			<input type = submit value = Upload">
+		<head>
+            <meta charset="UTF-8">
+            <title>
+                ファイルをアップロードして判定しよう
+            </title>
+        </head>
+        <body>
+            <h1>
+                ファイルをアップロードして判定しよう
+            </h1>
+            <form method = post enctype = multipart/form-data>
+            <p><input type=file name = file onchange="previewFile(this)">
+            <input type = submit value = Upload>
+            </form>
+        </body>
 
-		</form>
+
 <!--		prevent fresh website-->
-		<iframe id="iframe" name="iframe" style="display:none;"></iframe>
 	</div>
 </div>
 </body>
