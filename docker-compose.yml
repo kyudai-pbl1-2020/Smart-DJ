@@ -44,18 +44,17 @@ services:
     tty: true
     command: python webmain.py
   db:
+    build: ./mysql
     image: mysql:5.7
-    container_name: mysql_host
+    restart: always
     environment:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: test_database
-        MYSQL_USER: docker
-        MYSQL_PASSWORD: docker
-        TZ: 'Asia/Tokyo'
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    volumes:
-    - ./src/db/data:/var/lib/mysql
-    - ./src/db/my.cnf:/etc/mysql/conf.d/my.cnf
-    - ./src/db/sql:/docker-entrypoint-initdb.d
+        MYSQL_DATABASE: sample_db
+        MYSQL_USER: user
+        MYSQL_PASSWORD: password
+        MYSQL_ROOT_PASSWORD: rootpassword
     ports:
-    - 3306:3306
+        - "3314:3306"
+    volumes:
+        - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+        - ./mysql/conf.d:/etc/mysql/conf.d
+        - ./log/mysql:/var/log/mysql
