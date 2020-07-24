@@ -104,7 +104,7 @@ def show_emotion():
     # return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str)
     #return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str) + '<br>' + '<a href=https://www.youtube.com/results?search_query=' + weather_str + '+' + str(label[0]) + '>click!!!!</a>'
     return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str) + '<br>' + '<iframe width="560" height="315" src="' + y_url + '"frameborder="0" allowfullscreen></iframe>' + '<br>' + '<a href=http://localhost:5000/up_img>Back</a>'
-    #return str(label[0]), weather_str, y_url
+    
 
 @app.route("/up_img", methods=['GET', 'POST'])
 def uploads_file():
