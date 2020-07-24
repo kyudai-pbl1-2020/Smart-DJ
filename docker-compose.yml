@@ -40,7 +40,7 @@ services:
       TZ: 'Asia/Tokyo'
     working_dir: /app/src
     tty: true
-    command: python client_advanced.py
+    command: python insert_data.py
     links:
         - db:mysql_db
   db:
