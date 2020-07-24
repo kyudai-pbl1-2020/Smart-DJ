@@ -124,8 +124,7 @@ def uploads_file():
         if file and allwed_file(file.filename):
             # 危険な文字を削除（サニタイズ処理）
             filename = secure_filename(file.filename)
-            #ラベルを取得
-            #expression, weather, y_url = show_emotion()
+
             # ファイルの保存
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # アップロード後のページに転送
