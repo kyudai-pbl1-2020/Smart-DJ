@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request,redirect,url_for,flash
+from flask import Flask, jsonify, request,redirect,url_for,flash, render_template
 import json
 import os 
 import numpy as np
@@ -86,8 +86,8 @@ def show_emotion():
     label = ep.emotion_recognition(img_list)
 
     # weather
-    pred_data = sdp.subscribe_sensor_data()
-    # pred_data = [6,17,27.12,998.2,64.22] #テスト用
+    # pred_data = sdp.subscribe_sensor_data()
+    pred_data = [6,17,27.12,998.2,64.22] #テスト用
     pred_data = pd.Series(pred_data, index=['month','hour','temperature','pressure','humidity'])
     keyword = pred.pred(pred_data)
     weather_str = ''
@@ -123,25 +123,7 @@ def uploads_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # アップロード後のページに転送
             return redirect(url_for('show_emotion'))
-    return '''
-    <!doctype html>
-    <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>
-                ファイルをアップロードして判定しよう
-            </title>
-        </head>
-        <body>
-            <h1>
-                ファイルをアップロードして判定しよう
-            </h1>
-            <form method = post enctype = multipart/form-data>
-            <p><input type=file name = file>
-            <input type = submit value = Upload>
-            </form>
-        </body>
-'''
+    return render_template("DJ.html")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)
