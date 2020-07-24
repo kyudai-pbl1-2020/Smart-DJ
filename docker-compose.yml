@@ -40,6 +40,7 @@ services:
       TZ: 'Asia/Tokyo'
     working_dir: /app/src
     tty: true
+    command: python client_advanced.py
   db:
     build: ./mysql
     container_name: mysql_db
@@ -65,3 +66,5 @@ services:
       - "5000:5000"
     tty: true
     command: python webmain.py
+    links:
+        - db:mysql_db

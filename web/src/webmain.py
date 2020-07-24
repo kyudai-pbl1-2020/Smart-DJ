@@ -15,6 +15,26 @@ from keras.preprocessing import image
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
+import mysql.connector
+# Dockerを使う場合で、初期設定の場合hostは"192.168.99.100"
+# MySQLのユーザやパスワード、データベースはdocker-compose.ymlで設定したもの
+connector = mysql.connector.connect(
+            user='user',
+            password='password',
+            host='mysql_db',
+            database='sample_db',
+            port='3306')
+
+cursor = connector.cursor()
+cursor.execute("select * from users")
+
+disp = ""
+for row in cursor.fetchall():
+    disp = "ID:" + str(row[0]) + "  名前:" + row[1]
+
+cursor.close
+connector.close
+
 
 app = Flask(__name__)
 
@@ -30,6 +50,10 @@ def allwed_file(filename):
 @app.route("/", methods=['GET'])
 def hello():
     return "route get. Hello!"
+
+@app.route('/db')
+def db():
+    return disp
 
 @app.route('/reply', methods=['POST'])
 def reply():
