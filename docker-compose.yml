@@ -64,4 +64,4 @@ services:
     ports:
       - "5000:5000"
     tty: true
-    command: python webmain_test.py
+    command: python webmain.py

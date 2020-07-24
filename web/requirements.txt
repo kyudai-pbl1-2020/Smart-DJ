@@ -1,4 +1,13 @@
+paho-mqtt
+mqbeebotte
+pandas==1.0.1
 numpy
+scikit-learn
+optuna
 matplotlib
-flask
+lightgbm
 opencv-python
+keras
+tensorflowjs
+Pillow
+flask
