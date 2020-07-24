@@ -41,6 +41,8 @@ services:
     working_dir: /app/src
     tty: true
     command: python client_advanced.py
+    links:
+        - db:mysql_db
   db:
     build: ./mysql
     container_name: mysql_db
