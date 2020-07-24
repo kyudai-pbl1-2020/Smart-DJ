@@ -34,17 +34,15 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: beebotte
-    ports:
-        - "5000:5000"
     volumes:
       - ./src:/app/src
     environment:
       TZ: 'Asia/Tokyo'
     working_dir: /app/src
     tty: true
-    command: python webmain.py
   db:
     build: ./mysql
+    container_name: mysql_db
     image: mysql:5.7
     restart: always
     environment:
@@ -58,3 +56,12 @@ services:
         - ./mysql/initdb.d:/docker-entrypoint-initdb.d
         - ./mysql/conf.d:/etc/mysql/conf.d
         - ./log/mysql:/var/log/mysql
+  flask:
+    build: ./web
+    container_name: flask
+    volumes:
+      - ./web:/src
+    ports:
+      - "5000:5000"
+    tty: true
+    restart: always
