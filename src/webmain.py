@@ -100,6 +100,8 @@ def show_emotion():
     elif (keyword == 2):
         weather_str = 'rainy'
         y_url = 'https://www.youtube.com/watch?v=73w8J-o9614'
+    
+    
 
     # return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str)
     #return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str) + '<br>' + '<a href=https://www.youtube.com/results?search_query=' + weather_str + '+' + str(label[0]) + '>click!!!!</a>'
