@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 def detect(img):
 
     # 分類器の読込
-    cascade_path = './haarcascade_frontalface_alt.xml'
+    cascade_path = 'emotion/haarcascade_frontalface_alt.xml'
     
     # グレースケールに変換(顔検用)
     gry_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -25,7 +25,7 @@ def detect(img):
             face_img = img[y:y+h,x:x+w]
             face_list.append(face_img) 
         #画像のリサイズ
-        width,height=60,60
+        width,height=64,64
         face_list2=[]
         for face in face_list:
             face = cv2.resize(face,(width,height))

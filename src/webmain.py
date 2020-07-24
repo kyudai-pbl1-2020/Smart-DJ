@@ -1,5 +1,6 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,redirect,url_for,flash, render_template
 import json
+import os 
 import numpy as np
 import pandas as pd
 import requests
@@ -7,8 +8,24 @@ from weather import csv2dataset
 from weather import model_build
 from weather import pred
 from sensor import sensor_data_processor as sdp
+from emotion import detect_faces as df
+from emotion import emotion_predict as ep
+import cv2
+from keras.preprocessing import image
+from werkzeug.utils import secure_filename
+from flask import send_from_directory
+
 
 app = Flask(__name__)
+
+# 画像のアップロード先のディレクトリ
+UPLOAD_FOLDER = './uploads'
+# アップロードされる拡張子の制限
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'gif'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allwed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/", methods=['GET'])
 def hello():
@@ -47,7 +64,66 @@ def sensor():
         #label = 'test'
         #key = ''
         #requests.get('https://maker.ifttt.com/trigger/' + label + '/with/key/' + key)
+
         return(str(keyword) + 'sensor')
+
+@app.route("/emotion")
+def show_emotion():
+    # emotion
+    img = cv2.imread('./uploads/sad.jpg')
+    face_list =  df.detect(img)
+
+    for i in range(len(face_list)):
+        image_path = "faces/"+str(i)+".jpg"
+        cv2.imwrite(image_path,face_list[i])
+
+    img_list = []
+    for i in range(len(face_list)):
+        image_path = "faces/"+str(i)+".jpg"
+        img = image.load_img(image_path, grayscale=True , target_size=(64, 64))
+        img_list.append(img)
+
+    label = ep.emotion_recognition(img_list)
+
+    # weather
+    # pred_data = sdp.subscribe_sensor_data()
+    pred_data = [6,17,27.12,998.2,64.22] #テスト用
+    pred_data = pd.Series(pred_data, index=['month','hour','temperature','pressure','humidity'])
+    keyword = pred.pred(pred_data)
+    weather_str = ''
+    if (keyword == 0):
+        weather_str = 'sunny'
+    elif (keyword == 1):
+        weather_str = 'cloudy'
+    elif (keyword == 2):
+        weather_str = 'rainy'
+    
+    # return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str)
+    return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str) + '<br>' + '<a href=https://www.youtube.com/results?search_query=' + weather_str + '+' + str(label[0]) + '>click!!!!</a>'
+
+@app.route("/up_img", methods=['GET', 'POST'])
+def uploads_file():
+    # リクエストがポストかどうかの判別
+    if request.method == 'POST':
+        # ファイルがなかった場合の処理
+        if 'file' not in request.files:
+            flash('ファイルがありません')
+            return redirect(request.url)
+        # データの取り出し
+        file = request.files['file']
+        # ファイル名がなかった時の処理
+        if file.filename == '':
+            flash('ファイルがありません')
+            return redirect(request.url)
+        # ファイルのチェック
+        if file and allwed_file(file.filename):
+            # 危険な文字を削除（サニタイズ処理）
+            filename = secure_filename(file.filename)
+            # ファイルの保存
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # アップロード後のページに転送
+            return redirect(url_for('show_emotion'))
+    return render_template("DJ.html")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)
