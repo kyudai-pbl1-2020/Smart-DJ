@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request,redirect,url_for,flash
+from flask import Flask, jsonify, request,redirect,url_for,flash, render_template
 import json
 import os 
 import numpy as np
@@ -71,6 +71,7 @@ def sensor():
 def show_emotion():
     # emotion
     img = cv2.imread('./uploads/sad.jpg')
+    youtube_list = pd.read_csv("youtube-list.csv", index_col=0)
     face_list =  df.detect(img)
 
     for i in range(len(face_list)):
@@ -93,19 +94,17 @@ def show_emotion():
     weather_str = ''
     if (keyword == 0):
         weather_str = 'sunny'
-        y_url = 'https://www.youtube.com/watch?v=PDSkFeMVNFs'
     elif (keyword == 1):
         weather_str = 'cloudy'
-        y_url = 'https://www.youtube.com/watch?v=zwzoK4VWAHM'
     elif (keyword == 2):
         weather_str = 'rainy'
-        y_url = 'https://www.youtube.com/watch?v=73w8J-o9614'
     
-    
+    y_url = youtube_list.loc[label[0], weather_str]
 
     # return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str)
     #return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str) + '<br>' + '<a href=https://www.youtube.com/results?search_query=' + weather_str + '+' + str(label[0]) + '>click!!!!</a>'
-    return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str) + '<br>' + '<a href=' + y_url + '>click!!!!</a>'
+    return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str) + '<br>' + '<iframe width="560" height="315" src="' + y_url + '"frameborder="0" allowfullscreen></iframe>' + '<br>' + '<a href=http://localhost:5000/up_img>Back</a>'
+    #return str(label[0]), weather_str, y_url
 
 @app.route("/up_img", methods=['GET', 'POST'])
 def uploads_file():
@@ -125,29 +124,13 @@ def uploads_file():
         if file and allwed_file(file.filename):
             # 危険な文字を削除（サニタイズ処理）
             filename = secure_filename(file.filename)
+            #ラベルを取得
+            #expression, weather, y_url = show_emotion()
             # ファイルの保存
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # アップロード後のページに転送
             return redirect(url_for('show_emotion'))
-    return '''
-    <!doctype html>
-    <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>
-                ファイルをアップロードして判定しよう
-            </title>
-        </head>
-        <body>
-            <h1>
-                ファイルをアップロードして判定しよう
-            </h1>
-            <form method = post enctype = multipart/form-data>
-            <p><input type=file name = file>
-            <input type = submit value = Upload>
-            </form>
-        </body>
-'''
+    return render_template("DJ.html")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)
