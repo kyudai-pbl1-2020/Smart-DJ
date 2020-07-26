@@ -1,6 +1,9 @@
 CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(32) NOT NULL,
-    email VARCHAR(32) NOT NULL,
+    month INT NOT NULL,
+    day INT NOT NULL,
+    temperature FLOAT NOT NULL,
+    pressure FLOAT NOT NULL,
+    humidity FLOAT NOT NULL,
     PRIMARY KEY (id)
 );

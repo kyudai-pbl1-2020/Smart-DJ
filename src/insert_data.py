@@ -12,14 +12,17 @@ connector = mysql.connector.connect(
 
 cursor = connector.cursor()
 #pred_data = sdp.subscribe_sensor_data()
-pred_data = [6,17,27.12,998.2,64.22] #テスト用
+#pred_data = [6,17,27.12,998.2,64.22] #テスト用
+pred_data = [7,26,30.12,987.6,78.90] #テスト用2
+inserted_data = "INSERT INTO users (month,day,temperature,pressure,humidity) VALUES ({}, {}, {}, {}, {});".format(pred_data[0], pred_data[1], pred_data[2], pred_data[3], pred_data[4])
+cursor.execute(inserted_data)
 cursor.execute("select * from users")
-
 disp = ""
 for row in cursor.fetchall():
-    disp = "ID:" + str(row[0]) + "  名前:" + row[1]
+    disp = "ID:" + str(row[0]) + "<br>month:" + str(row[1]) + "<br>day:" + str(row[2]) + "<br>temperature:" + str(row[3]) + "<br>pressure:" + str(row[4]) + "<br>humidity:" + str(row[5])
 
 cursor.close
+connector.commit()
 connector.close
 
 print(disp)
