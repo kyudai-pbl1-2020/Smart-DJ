@@ -7,19 +7,13 @@ import requests
 from weather import csv2dataset
 from weather import model_build
 from weather import pred
-#from sensor import sensor_data_processor as sdp
+from sensor import sensor_data_processor as sdp
 from emotion import detect_faces as df
 from emotion import emotion_predict as ep
 import cv2
 from keras.preprocessing import image
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
-
-import mysql.connector
-# Dockerを使う場合で、初期設定の場合hostは"192.168.99.100"
-# MySQLのユーザやパスワード、データベースはdocker-compose.ymlで設定したもの
-
-
 
 
 app = Flask(__name__)
@@ -35,28 +29,7 @@ def allwed_file(filename):
 
 @app.route("/", methods=['GET'])
 def hello():
-    return "route get. Hello!"
-
-@app.route('/db')
-def db():
-    connector = mysql.connector.connect(
-        user='user',
-        password='password',
-        host='mysql_db',
-        database='sample_db',
-        port='3306')
-
-    cursor = connector.cursor()
-    cursor.execute("select * from users")
-
-
-    disp = ""
-    for row in cursor.fetchall():
-        disp = "ID:" + str(row[0]) + "<br>month:" + str(row[1]) + "<br>day:" + str(row[2]) + "<br>temperature:" + str(row[3]) + "<br>pressure:" + str(row[4]) + "<br>humidity:" + str(row[5])
-
-    cursor.close
-    connector.close
-    return disp
+    return "route get. Hello Pikachu!"
 
 @app.route('/reply', methods=['POST'])
 def reply():
@@ -98,6 +71,7 @@ def sensor():
 def show_emotion():
     # emotion
     img = cv2.imread('./uploads/sad.jpg')
+    youtube_list = pd.read_csv("youtube-list.csv", index_col=0)
     face_list =  df.detect(img)
 
     for i in range(len(face_list)):
@@ -113,27 +87,8 @@ def show_emotion():
     label = ep.emotion_recognition(img_list)
 
     # weather
-    connector = mysql.connector.connect(
-        user='user',
-        password='password',
-        host='mysql_db',
-        database='sample_db',
-        port='3306')
-
-    cursor = connector.cursor()
-    cursor.execute("select * from users")
-
-
-    disp = ""
-    pred_data = []
-    for row in cursor.fetchall():
-        disp = "ID:" + str(row[0]) + "<br>month:" + str(row[1]) + "<br>day:" + str(row[2]) + "<br>temperature:" + str(row[3]) + "<br>pressure:" + str(row[4]) + "<br>humidity:" + str(row[5])
-        pred_data = [row[1], row[2], row[3], row[4], row[5]]
-
-    cursor.close
-    connector.close
-    # pred_data = sdp.subscribe_sensor_data()
-    # pred_data = [6,17,27.12,998.2,64.22] #テスト用
+    #pred_data = sdp.subscribe_sensor_data()
+    pred_data = [6,17,27.12,998.2,64.22] #テスト用
     pred_data = pd.Series(pred_data, index=['month','hour','temperature','pressure','humidity'])
     keyword = pred.pred(pred_data)
     weather_str = ''
@@ -146,7 +101,7 @@ def show_emotion():
     
     context = {}
     context['label'] = label
-    context['weather_str'] = weather_str
+    context['weather_str'] = 'rainy'
     # return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str)
     return render_template('prediction.html',**context)
 
@@ -168,11 +123,11 @@ def uploads_file():
         if file and allwed_file(file.filename):
             # 危険な文字を削除（サニタイズ処理）
             filename = secure_filename(file.filename)
+
             # ファイルの保存
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # アップロード後のページに転送
             return redirect(url_for('show_emotion'))
     return render_template("DJ.html")
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)
