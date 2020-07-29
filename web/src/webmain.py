@@ -7,7 +7,7 @@ import requests
 from weather import csv2dataset
 from weather import model_build
 from weather import pred
-from sensor import sensor_data_processor as sdp
+#from sensor import sensor_data_processor as sdp
 from emotion import detect_faces as df
 from emotion import emotion_predict as ep
 import cv2
@@ -80,8 +80,8 @@ def sensor():
     #model_build.build(data,target)
 
     #予測用データ読み込み (list['month','hour','temperature','pressure','humidity'])
-    pred_data = sdp.subscribe_sensor_data()
-    #pred_data = [6,17,27.12,998.2,64.22] #テスト用
+    #pred_data = sdp.subscribe_sensor_data()
+    pred_data = [6,17,27.12,998.2,64.22] #テスト用
     #print(pred_data)
     #予測データの変換
 
@@ -113,8 +113,27 @@ def show_emotion():
     label = ep.emotion_recognition(img_list)
 
     # weather
+    connector = mysql.connector.connect(
+        user='user',
+        password='password',
+        host='mysql_db',
+        database='sample_db',
+        port='3306')
+
+    cursor = connector.cursor()
+    cursor.execute("select * from users")
+
+
+    disp = ""
+    pred_data = []
+    for row in cursor.fetchall():
+        disp = "ID:" + str(row[0]) + "<br>month:" + str(row[1]) + "<br>day:" + str(row[2]) + "<br>temperature:" + str(row[3]) + "<br>pressure:" + str(row[4]) + "<br>humidity:" + str(row[5])
+        pred_data = [row[1], row[2], row[3], row[4], row[5]]
+
+    cursor.close
+    connector.close
     # pred_data = sdp.subscribe_sensor_data()
-    pred_data = [6,17,27.12,998.2,64.22] #テスト用
+    # pred_data = [6,17,27.12,998.2,64.22] #テスト用
     pred_data = pd.Series(pred_data, index=['month','hour','temperature','pressure','humidity'])
     keyword = pred.pred(pred_data)
     weather_str = ''
