@@ -144,8 +144,11 @@ def show_emotion():
     elif (keyword == 2):
         weather_str = 'rainy'
     
+    context = {}
+    context['label'] = label
+    context['weather_str'] = weather_str
     # return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str)
-    return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str) + '<br>' + '<a href=https://www.youtube.com/results?search_query=' + weather_str + '+' + str(label[0]) + '>click!!!!</a>'
+    return render_template('prediction.html',**context)
 
 @app.route("/up_img", methods=['GET', 'POST'])
 def uploads_file():
