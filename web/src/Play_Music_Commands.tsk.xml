@@ -1,0 +1,120 @@
+<TaskerData sr="" dvi="1" tv="4.9u4m">
+	<Task sr="task177">
+		<cdate>1486245272327</cdate>
+		<edate>1491792010046</edate>
+		<id>177</id>
+		<nme>Play Music Commands</nme>
+		<Action sr="act0" ve="7">
+			<code>877</code>
+			<label>Any Music</label>
+			<Str sr="arg0" ve="3">android.media.action.MEDIA_PLAY_FROM_SEARCH</Str>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3">android.intent.extra.focus:vnd.android.cursor.item/*</Str>
+			<Str sr="arg5" ve="3">query:Relaxed Classical</Str>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3">com.google.android.music</Str>
+			<Str sr="arg8" ve="3"/>
+			<Int sr="arg9" val="1"/>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>877</code>
+			<label>Your Playlist</label>
+			<Str sr="arg0" ve="3">android.media.action.MEDIA_PLAY_FROM_SEARCH</Str>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3">android.intent.extra.focus:vnd.android.cursor.item/playlist</Str>
+			<Str sr="arg5" ve="3">query:Relaxed Classical</Str>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3">com.google.android.music</Str>
+			<Str sr="arg8" ve="3"/>
+			<Int sr="arg9" val="1"/>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>877</code>
+			<label>Genre</label>
+			<Str sr="arg0" ve="3">android.media.action.MEDIA_PLAY_FROM_SEARCH</Str>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3">android.intent.extra.focus:Audio.Genres.ENTRY_CONTENT_TYPE</Str>
+			<Str sr="arg5" ve="3">query: Classical</Str>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3">com.google.android.music</Str>
+			<Str sr="arg8" ve="3"/>
+			<Int sr="arg9" val="1"/>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>877</code>
+			<label>Artist</label>
+			<Str sr="arg0" ve="3">android.media.action.MEDIA_PLAY_FROM_SEARCH</Str>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3">android.intent.extra.focus:Audio.Artists.ENTRY_CONTENT_TYPE</Str>
+			<Str sr="arg5" ve="3">query: Ludwig van Beethoven</Str>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3">com.google.android.music</Str>
+			<Str sr="arg8" ve="3"/>
+			<Int sr="arg9" val="1"/>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>877</code>
+			<label>Album</label>
+			<Str sr="arg0" ve="3">android.media.action.MEDIA_PLAY_FROM_SEARCH</Str>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3">android.intent.extra.focus:Audio.Albums</Str>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3">query: Voices</Str>
+			<Str sr="arg7" ve="3">com.google.android.music</Str>
+			<Str sr="arg8" ve="3"/>
+			<Int sr="arg9" val="1"/>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>877</code>
+			<label>Uploaded Album</label>
+			<Str sr="arg0" ve="3">android.media.action.MEDIA_PLAY_FROM_SEARCH</Str>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3">android.intent.extra.focus:vnd.android.cursor.item/album</Str>
+			<Str sr="arg5" ve="3">query:Voices</Str>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3">com.google.android.music</Str>
+			<Str sr="arg8" ve="3"/>
+			<Int sr="arg9" val="1"/>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>877</code>
+			<label>Song Radio</label>
+			<Str sr="arg0" ve="3">android.media.action.MEDIA_PLAY_FROM_SEARCH</Str>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3">android.intent.extra.focus:vnd.android.cursor.item/audio</Str>
+			<Str sr="arg5" ve="3">query:Fall in Love</Str>
+			<Str sr="arg6" ve="3">media_title: Fall in Love</Str>
+			<Str sr="arg7" ve="3">com.google.android.music</Str>
+			<Str sr="arg8" ve="3"/>
+			<Int sr="arg9" val="1"/>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>877</code>
+			<label>Playlist</label>
+			<Str sr="arg0" ve="3">android.media.action.MEDIA_PLAY_FROM_SEARCH</Str>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3">android.intent.extra.focus:Audio.Playlists</Str>
+			<Str sr="arg5" ve="3">query:Relaxed Classical</Str>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3">com.google.android.music</Str>
+			<Str sr="arg8" ve="3"/>
+			<Int sr="arg9" val="1"/>
+		</Action>
+	</Task>
+</TaskerData>
