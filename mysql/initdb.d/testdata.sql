@@ -1,0 +1,1 @@
+INSERT INTO users (id,month,day,temperature,pressure,humidity) VALUES (1, 6, 17, 27.12, 998.2, 64.22);
