@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>flask网页模板的学习</title>
+</head>
+<body>
+<div>
+<!-- 双中括弧是输出。单中括弧是逻辑判断 以后的注释要用{# #} 需要注意的是，这样的注释是在html中的简单注释，我们现在是动态的在传数据形式，那么以后的注释都要统一规范，我只是在我传入数据的时候写了几个简单的注释，下面的之后全是以{# #}来当注释的 小细节要注意，不然错误的话不好找 -->
+这是我们第一个网页模板 <br /><br />
+<!-- 这里是注释。最基本的模板语法输出一个变量 -->
+<!-- {{ my_str + ", 前端页面" }} <br /><br /> -->
+<!-- 模板语法可以做简单的运算 -->
+{{ my_int + 10 }} <br /><br />
+<!-- list的操作，可以引用下表的方式输出list元素 -->
+{{ my_list }}<br />
+{{ my_list[0] }}<br />
+{{ my_list.1 }}<br /><br /><br />
+{{ my_dict["name"] }} <br />
+{{ my_dict }} <br />
+{{ my_dict.age }} <br />
+
+{# 使用{% %} 来定义简单的逻辑控制代码 #}
+{% if my_int %}
+整型存在
+{% else %}
+不存在
+{# 使用if判断。一定要有endif 用来结束逻辑判断#}
+{% endif %}
+
+<ul>
+{# 使用for循环来遍历list #}
+{% for item in my_list %}
+<li>{{ item }}</li>
+{# 使用for循环也要用endfor#}
+{% endfor %}
+</ul>
+{# 使用if for 嵌套来实现单双行背景色 #}
+　　我这里用的是内联样式，为了更直观，并不是很正规。
+<table style="border:1px solid black;padding: 5px;">
+{% for item in my_list %}
+{% if loop.index % 2 == 0 %}
+<tr style="">">
+<td>{{ item }}</td>
+</tr>
+{% else %}
+<tr style="">">
+<td>{{ item }}</td>
+</tr>
+{% endif %}
+{% endfor %}
+</table>
+</div>
+</body>
+</html>
