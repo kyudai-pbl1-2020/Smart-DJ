@@ -127,19 +127,5 @@ def uploads_file():
             # アップロード後のページに転送
             return redirect(url_for('show_emotion'))
     return render_template("DJ.html")
-
-@app.route('/test')
-def index():
-    my_str = "你好世界"
-# my_int = 123
-# my_list = [4,5,6]
-# my_dict = {'name':'小明','age':15}
-
-    context = {}
-    context['label'] = ['happy','sad']
-    context['weather_str'] = ['sunny','cloudy']
-    # context['my_list'] = ['卫生纸','胶条','乱七八糟',78,'再来一个','还是不好看','好乱！']
-    # context['my_dict'] = {'name':'小花','age':15}
-    return render_template('prediction.html',**context)
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)
