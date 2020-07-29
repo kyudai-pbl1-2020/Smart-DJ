@@ -143,10 +143,14 @@ def show_emotion():
         weather_str = 'cloudy'
     elif (keyword == 2):
         weather_str = 'rainy'
-    
+
+    youtube_list = pd.read_csv("youtube-list.csv", index_col=0)
+    y_url = youtube_list.loc[label[0], weather_str]
+
     context = {}
     context['label'] = label
     context['weather_str'] = weather_str
+    context['y_url'] = y_url
     # return 'emotion : ' + str(label[0]) + '<br>weather : ' + str(weather_str)
     return render_template('prediction.html',**context)
 
