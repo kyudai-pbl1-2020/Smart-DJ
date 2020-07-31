@@ -44,6 +44,12 @@
 			text-shadow : rgba(255,255,255,0.5) 0 5px 6px, rgba(255,255,255,0.2) 1px 3px 3px;
 			-webkit-background-clip : text;
 		}
+		.youtube{
+			position: absolute;
+			top: 50%;
+			left:70%;
+
+		}
 	</style>
 </head>
 
@@ -69,12 +75,15 @@
 		<div style="width: 370px;height: 50px;float: left;"></div>
 		<div style="width: 280px;height: 50px;float: left;">emotion:{{label[0]}}</div>
 		<div style="width: 250px;height: 50px;float: left;">weather:{{weather_str}}</div>
+		<div style="height: 400px;width:400px;float: left;">
+			<iframe class="youtube" width="560" height="400" src={{y_url}} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
 	</div>
 	<div class="label">
 		<div style="width: 570px;height: 200px;float: left">
 		</div>
 		<div style="float: left;">
-			<a style="color: brown;" href=https://www.youtube.com/results?search_query={{label[0]}}+{{weather_str}}>click</a>
+			<!-- <a style="color: brown;" href=https://www.youtube.com/results?search_query={{label[0]}}+{{weather_str}}>click</a> -->
 		</div>
 	</div>
 </div>
