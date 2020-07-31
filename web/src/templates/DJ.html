@@ -6,10 +6,13 @@
 		function previewFile(obj) {
             var fileReader = new FileReader();
 	        fileReader.onload = (function() {
-		        document.getElementById('preview').src = fileReader.result;
+				document.getElementById('preview2').src = fileReader.result;
+				document.getElementById('preview2').style.visibility = 'visible';
+				document.getElementById('preview').style.visibility = "hidden";
 	        });
-	        fileReader.readAsDataURL(obj.files[0]);
-		}
+			fileReader.readAsDataURL(obj.files[0]);
+		}	
+
 	</script>
 <title>無題ドキュメント</title>
 	<style>
@@ -45,6 +48,25 @@
 			text-shadow : rgba(255,255,255,0.5) 0 5px 6px, rgba(255,255,255,0.2) 1px 3px 3px;
 			-webkit-background-clip : text;
 		}
+		#preview{
+			transform-origin:center center;
+			display: block;
+			transition: 50s;
+			position: absolute;
+			top: 50%;
+			visibility: visible; 
+		}
+
+		#preview:hover{
+			transform: rotate(3600deg);
+			cursor: url(example.cur), pointer;
+		}
+
+		#preview2{
+			position: absolute;
+			top: 50%;
+			visibility: hidden;
+		}
 	</style>
 </head>
 
@@ -57,7 +79,8 @@
 	<div style="width: 1980px;height: 400px" >
 		<div style="height: 400px;width:300px;float: left"></div>
 		<div style="height: 400px;width:700px;float: left;" >
-    		<img id="preview" src="../static/images/play.png" width="400" height="400"/>
+			<img id="preview" src="../static/images/play.png" width="400" height="400"/>
+			<img id="preview2" src="../static/images/play.png" width="400" height="400"/>
 		</div>
 		<!--<div style="height: 400px;width:400px;float: left;">
 			<iframe width="560" height="400" src="https://www.youtube.com/embed/M5V9CERbLcA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -77,8 +100,8 @@
                 ファイルをアップロードして判定しよう
             </h1>
             <form method = post enctype = multipart/form-data>
-            <p><input type=file name = file onchange="previewFile(this)">
-            <input type = submit value = Upload>
+            	<input type=file name = file onchange="previewFile(this)">
+            	<input type = submit value = Upload>
             </form>
         </body>
 
